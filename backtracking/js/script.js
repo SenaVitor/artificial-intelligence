@@ -91,12 +91,12 @@
     b.filhos.push(a);
     const nos = [a,b,c,d,e,f,g,h,i,u];
     const inicial = nos.find(no => no.nome == "A");
-    const objetivo = nos.find(no => no.nome == "G");
+    const objetivo = nos.find(no => no.nome == "G").nome;
     // const objetivo = "Z"; //falha
 
     let player = {
         x: inicial.x,
-        y: inicial.y + 2,
+        y: inicial.y,
         width: 28,
         height: 28,
         speed: 2
@@ -126,22 +126,18 @@
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
     ];
 
-    const retorno = backtracking(inicial, objetivo.nome, nos);
+    const retorno = backtracking(inicial, objetivo, nos);
     let le = [];
     let bss = [];
-    if(retorno != "FALHA"){
-        le = retorno.le;
-        bss = retorno.bss;
-    }else{
-        le = "FALHA";
-    }
-    // console.log(le);
-    // console.log(bss)
+    let flag = true;
+    le = retorno.le;
+    bss = retorno.bss;
+    if(le === "FALHA") player.speed = 8;
     let noAtual = inicial;
 
     function update(){
         if(mvLeft && !mvRight){
-            player.x -= player.speed;
+            player.x -= player.speed; 
         }else if(mvRight && !mvLeft){
             player.x += player.speed;
         }
@@ -181,52 +177,59 @@
         update();
         render();
         requestAnimationFrame(loop, cnv);
-        if(le != "FALHA"){
-            if(bss && bss.length > 0){
-                const no = nos.find(no => no.nome == bss[0]);
-                mvLeft = false; 
-                mvRight = false;
-                mvDown = false;
-                mvUp = false;
-                if(player.x != no.x || player.y != no.y){
-                    // console.log("px " + player.x + " x " + no.x + " py " + player.y + " y " + no.y)
-                    // console.log(no)
-                    move(noAtual, no)
-                }else{
-                    const nome = bss.shift();
-                    noAtual = nos.find(no => no.nome == nome);
-                    if(!no.filhos.find(filho => bss.find(nome => filho.nome === nome))){
-                        let noPai;
-                        if(no.nome === "F" && bss[0] !== "C"){
-                            noPai = nos.find(noAux => noAux.nome == no.filhos.find(filho => filho.y < no.y && filho.nome !== "C").nome);
-                        }else{
-                            noPai = nos.find(noAux => noAux.nome == no.filhos.find(filho => filho.y < no.y).nome);
-                        }
-                        bss.unshift(noPai.nome);
-                    }
-                }
-            }else if(le && le.length > 0){
-                mvLeft = false; 
-                mvRight = false;
-                mvDown = false;
-                mvUp = false;
-                const no = nos.find(no => no.nome == le[le.length-1]);
-                if(player.x != no.x || player.y != no.y){
-                    move(noAtual, no)
-                }else{
-                    let nome = le.pop();
-                    noAtual = nos.find(no => no.nome == nome);
-                }
+        if(bss && bss.length > 0){
+            const no = nos.find(no => no.nome == bss[0]);
+            mvLeft = false; 
+            mvRight = false;
+            mvDown = false;
+            mvUp = false;
+            if(player.x != no.x || player.y != no.y){
+                move(noAtual, no)
             }else{
-                console.log("Objetivo alcançado no nó " + noAtual.nome + "!");
+                const nome = bss.shift();
+                noAtual = nos.find(no => no.nome == nome);
+                if(!no.filhos.find(filho => bss[0] === filho.nome)){
+                    let noPai;
+                    if(no.nome === "F" && bss[0] !== "C"){
+                        noPai = nos.find(noAux => noAux.nome == no.filhos.find(filho => filho.y < no.y && filho.nome !== "C").nome);
+                    }else{
+                        noPai = nos.find(noAux => noAux.nome == no.filhos.find(filho => filho.y < no.y).nome);
+                    }
+                    bss.unshift(noPai.nome);
+                }
             }
         }else{
-            console.log(le);
+            if(le != "FALHA"){
+                if(le && le.length > 0){
+                    mvLeft = false; 
+                    mvRight = false;
+                    mvDown = false;
+                    mvUp = false;
+                    const no = nos.find(no => no.nome == le[le.length-1]);
+                    if(player.x != no.x || player.y != no.y){
+                        move(noAtual, no)
+                    }else{
+                        let nome = le.pop();
+                        noAtual = nos.find(no => no.nome == nome);
+                    }
+                }else{
+                    if(flag){
+                        alert("Objetivo alcançado no nó " + noAtual.nome + "!");
+                        flag = false;
+                    } 
+                    console.log("Objetivo alcançado no nó " + noAtual.nome + "!");
+                }
+            }else{
+                if(flag){
+                    alert(le);
+                    flag = false;
+                } 
+                console.log(le);
+            }
         }
     }
 
     function move(objA, objB){
-        // console.log(objA)
         if(objA.nome === "A"){
             if(objB.nome === "B"){
                 if(player.x != objB.x){
@@ -372,7 +375,7 @@
                 le.unshift(ec.nome);
             }
         }
-        return "FALHA";
+        return {le: "FALHA", bss: bss};
     }
     
     function marcarFilhos(ec, le, lne, bss){
