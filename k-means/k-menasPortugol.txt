@@ -1,0 +1,13 @@
+Estratégia do K-means:
+1 - Escolhe aleatoriamente dois pontos iniciais para serem os Centróides
+A sugestão é que sejam escolhidos dois pontos quaisquer dentre os que compõem a base de treinamento
+2 - Calcular a distância geométrica entre cada ponto da base até cada Centroide.
+3- Associa a cada ponto o Centroide mais perto!!
+4- Se não houve mudança no conjunto dos Centroides, então K-Means finalizou.
+5 - Se houve mudança no conjunto dos Centroides
+5.1 - Calcular a média das coordenadas X do Conjunto CJ1 5.2 - Calcular a média das coordenadas Y do Conjunto CJ1
+5.3 - Faça o novo Centroide C1 um ser os valores das médias de 5.1 e 5.2
+5.4 - Calcular a média das coordenadas X do Conjunto CJ 2
+5.5 - Calcular a média das coordenadas Y do Conjunto CJ2
+5.6 - Faça o novo Centroide C2 um ser os valores das médias de 5.4 e 5.5
+6- Volta para o Passo 2
