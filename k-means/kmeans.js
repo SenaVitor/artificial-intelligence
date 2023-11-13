@@ -79,7 +79,7 @@ function kMeans(){
             y = point.y - centroideTwo.y;
             distToTwo.push(Math.sqrt(Math.pow(x,2) + Math.pow(y,2)));
             
-            if(distToOne[distToOne.length-1] < distToTwo[distToTwo.length-1]){
+            if(Number(distToOne[distToOne.length-1]) < Number(distToTwo[distToTwo.length-1])){
                 if(point.centroide != centroideOne){
                     point.centroide = centroideOne;
                     centroidesUpdated = true;
