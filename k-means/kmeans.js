@@ -1,3 +1,71 @@
+// const base = [{
+//     name: "D1",
+//     x: 1,
+//     y: 2,
+//     centroide: null
+// },{
+//     name: "D2",
+//     x: 2,
+//     y: 2,
+//     centroide: null
+// },{
+//     name: "D3",
+//     x: 3,
+//     y: 3,
+//     centroide: null
+// },{
+//     name: "D4",
+//     x: 4,
+//     y: 1,
+//     centroide: null
+// },{
+//     name: "D5",
+//     x: 5,
+//     y: 2,
+//     centroide: null
+// },{
+//     name: "D6",
+//     x: 6,
+//     y: 3,
+//     centroide: null
+// },{
+//     name: "D7",
+//     x: 8,
+//     y: 9,
+//     centroide: null
+// },{
+//     name: "D8",
+//     x: 7,
+//     y: 5,
+//     centroide: null
+// },{
+//     name: "D9",
+//     x: 7,
+//     y: 7,
+//     centroide: null
+// },{
+//     name: "D10",
+//     x: 8,
+//     y: 8,
+//     centroide: null
+// },{
+//     name: "D11",
+//     x: 8,
+//     y: 6,
+//     centroide: null
+// },{
+//     name: "D12",
+//     x: 9,
+//     y: 10,
+//     centroide: null
+// },{
+//     name: "D13",
+//     x: 9,
+//     y: 11,
+//     centroide: null
+// }]
+
+
 const base = [{
     name: "D1",
     x: 1,
@@ -47,6 +115,16 @@ const base = [{
     name: "D10",
     x: 7.8,
     y: 6.1,
+    centroide: null
+},{
+    name: "D11",
+    x: 8,
+    y: 7.1,
+    centroide: null
+},{
+    name: "D12",
+    x: 1.6,
+    y: 1.8,
     centroide: null
 }]
 
@@ -117,8 +195,8 @@ function kMeans(){
                 mediaY += point.y;
             });
 
-            mediaX /= pointsOne.length;
-            mediaY /= pointsOne.length;
+            mediaX /= pointsTwo.length;
+            mediaY /= pointsTwo.length;
             centroideTwo.x = mediaX;
             centroideTwo.y = mediaY;
         }
